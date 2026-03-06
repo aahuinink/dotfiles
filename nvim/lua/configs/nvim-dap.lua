@@ -4,15 +4,13 @@ local dap = require("dap")
 dap.adapters.codelldb = {
     name = "Windows LLDB",
     type = "server",
-    host = "localhost",
-    port = "8081",
-    -- executable = {
-    --     command = "/mnt/d/repos/codelldb/extension/adapter/codelldb.exe",
+    port = 8080,
+    -- executable = { command = "/mnt/c/Users/a_hui/repos/codelldb/adapter/codelldb.exe",
     --     args = {
     --         "--port",
-    --         "${port}",
+    --         "8080",
     --     },
-    --     detached = false,
+    -- --     detached = false,
     -- },
 }
 
@@ -23,17 +21,32 @@ local convert_to_winpath = function(wsl_path)
     return win_path
 end
 
+local get_remote_pid = function()
+    return vim.fn.input("Enter PID of target on remote host: ")
+end
+
 dap.configurations.cpp = {
     {
         name = "Debug JUCE plugin in AudioPluginHost",
         type = "codelldb",
-        request = "launch",
-        program = convert_to_winpath("/mnt/d/repos/JUCE/extras/AudioPluginHost/Builds/VisualStudio2022/x64/Debug/App/AudioPluginHost.exe"),
-        cwd = convert_to_winpath("${workspaceFolder}"),
+        request = "attach",
+        initCommands = {
+            "platform select remote-windows",
+            "platform connect connect://192.168.48.1:8081",
+            },
+        targetCreateCommands = {
+            "attach AudioPluginHost",
+            -- function()
+            --     return vim.fn.input("Remote file to debug: ")
+            -- end,
+        },
+        env = {
+            PATH = "...",
+            },
         stopOnEntry = false,
-        sourceMap = {
-            ["D:\\repos\\"] = "/mnt/d/",
-        }
+        -- sourceMap = {
+        --     ["C:\\"] = "/mnt/c/",
+        -- }
     },
     {
         name = "Debug Windows .exe",

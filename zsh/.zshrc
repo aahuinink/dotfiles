@@ -82,7 +82,8 @@ alias c='clear'
 alias cd='chdir'
 
 # Update path for zoxide and nvim
-export PATH=$PATH:/home/aaron/.local/bin:/opt/nvim/nvim-linux-x86_64/bin
+export VCPKG_ROOT=/home/aaron/repos/vcpkg
+export PATH=$PATH:/home/aaron/.local/bin:/opt/nvim/nvim-linux-x86_64/bin:$VCPKG_ROOT
 
 # Shell integrations
 source <(fzf --zsh)
