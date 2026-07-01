@@ -1,6 +1,22 @@
-local dap = require("dap")
+local dap, dapui = require "dap", require "dapui"
 
--- Use Windows lldb.exe
+dapui.setup()
+
+dap.listeners.before.attach.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+  dapui.close()
+end
+
+
+-- Use codelldb
 dap.adapters.codelldb = {
     type = "server",
     port = "${port}",
@@ -29,11 +45,8 @@ dap.configurations.cpp = {
             "platform connect connect://localhost:8080",
             "platform settings -w D:\\plugins\\debug",
         },
-        preRunCommands = {
-            -- function() return "target module add " .. vim.fn.input("Enter path to JUCE plugin: ", vim.fn.getcwd() .. "/Builds/") end,
-            "target module add /home/aaron/repos/SimpleEQLinux/Builds/VisualStudio2022/x64/Debug/VST3/SimpleEQLinux.vst3/Contents/x86_64-win/SimpleEQLinux.vst3",
-            "target symbols add /home/aaron/repos/SimpleEQLinux/Builds/VisualStudio2022/x64/Debug/VST3/SimpleEQLinux.pdb",
-            "target symbols add /home/aaron/JUCE/extras/AudioPluginHost/Builds/VisualStudio2022/x64/Debug/App/AudioPluginHost.pdb",
+        postRunCommands = {
+            "sett"
         },
         exitCommands = {
             "platform disconnect",
@@ -41,7 +54,7 @@ dap.configurations.cpp = {
         stopOnEntry = false,
     },
     {
-        name = "Debug Windows .exe",
+        name = "Debug local file",
         type = "codelldb",
         request = "launch",
         program = function()
@@ -50,4 +63,7 @@ dap.configurations.cpp = {
         cwd = '${workspaceFolder}',
         stopOnEntry = false,
     },
+
 }
+
+dap.configurations.c = dap.configurations.cpp
