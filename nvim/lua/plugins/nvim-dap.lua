@@ -6,13 +6,8 @@ return {
             require("configs.nvim-dap")
         end,
     },
-    {
-        "igorlfs/nvim-dap-view",
-        ---@module 'dap-view'
-        ---@type dapview.Config
-        opts = {},
-        dependencies = {
-            'mfussenegger/nvim-dap',
-        },
-    },
+    { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
+    require("lazydev").setup({
+      library = { "nvim-dap-ui" },
+    }),
 }
