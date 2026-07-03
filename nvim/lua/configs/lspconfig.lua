@@ -13,6 +13,7 @@ vim.lsp.config.clangd = {
     '--header-insertion=iwyu',
     '--clang-tidy',
     '--function-arg-placeholders=1',
+    '--inlay-hints=true',
   },
   init_options = {
     usePlaceholders = true,
