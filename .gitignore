@@ -2,3 +2,6 @@ gh/**
 *.list
 
 lazy-lock.json
+
+# tmux plugins are managed by TPM, not tracked in git
+tmux/plugins/
