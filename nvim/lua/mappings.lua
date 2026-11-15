@@ -18,3 +18,6 @@ map("n",
 )
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+
+map("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory in Oil" })
+map("n", "<Leader>ot", "<cmd>Oil --trash /<CR>", { desc = "Open trash in Oil (move files out to restore)" })

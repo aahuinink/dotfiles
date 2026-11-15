@@ -1,7 +1,13 @@
 # Autostart tmux. Must stay above the p10k instant prompt block, since tmux
 # takes over the terminal. Skips nested sessions, non-interactive shells, and
 # editor-embedded terminals. Falls through to a normal shell if tmux exits.
+#
+# On WSL, also skip shells WSL didn't launch itself (no $WSL_DISTRO_NAME). With
+# systemd=true, WSL runs a hidden `login -f` session at boot whose PATH comes
+# from /etc/environment — no Windows paths. If that shell starts the tmux
+# server, every pane inherits the stripped PATH and clip.exe etc. vanish.
 if [[ -z "$TMUX" && -z "$VSCODE_INJECTION" && "$TERM_PROGRAM" != "vscode" && $- == *i* ]] \
+   && [[ -n "$WSL_DISTRO_NAME" || "$(</proc/version 2>/dev/null)" != *[Mm]icrosoft* ]] \
    && command -v tmux >/dev/null; then
   tmux attach-session -t main 2>/dev/null || tmux new-session -s main
 fi
@@ -91,7 +97,7 @@ alias cd='chdir'
 
 # Update path for zoxide and nvim
 export VCPKG_ROOT=/home/aaron/repos/vcpkg
-export PATH=$PATH:/home/aaron/.local/bin:/opt/nvim/nvim-linux-x86_64/bin:$VCPKG_ROOT
+export PATH=$PATH:/home/aaron/.local/bin:/opt/nvim-linux-x86_64/bin:$VCPKG_ROOT:/mnt/c/Windows/System32/
 
 # Shell integrations
 source <(fzf --zsh)
