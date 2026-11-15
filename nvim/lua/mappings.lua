@@ -19,13 +19,9 @@ map("n",
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
-map("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory in Oil" })
+map("n", "-", "<cmd>Oil --float<CR>", { desc = "Open parent directory in floating Oil" })
 -- Replaces NvChad's <C-n> (NvimTreeToggle); nvim-tree is still on <Leader>e
 map("n", "<C-n>", function()
-  if vim.bo.filetype == "oil" then
-    require("oil").close()
-  else
-    require("oil").open(vim.fn.getcwd())
-  end
-end, { desc = "Toggle Oil in the working directory" })
-map("n", "<Leader>ot", "<cmd>Oil --trash /<CR>", { desc = "Open trash in Oil (move files out to restore)" })
+  require("oil").toggle_float(vim.fn.getcwd())
+end, { desc = "Toggle floating Oil in the working directory" })
+map("n", "<Leader>ot", "<cmd>Oil --float --trash /<CR>", { desc = "Open trash in Oil (move files out to restore)" })

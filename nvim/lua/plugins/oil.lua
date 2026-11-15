@@ -47,6 +47,12 @@ return {
       default_file_explorer = true,
       delete_to_trash = true,
       skip_confirm_for_simple_edits = false,
+      -- Centered float sized like the Lazy/Mason windows (80% of the editor)
+      float = {
+        max_width = 0.8,
+        max_height = 0.8,
+        border = "rounded",
+      },
       keymaps = {
         ["<Leader>or"] = { restore_to_cwd, mode = "n", desc = "Restore trashed item to cwd" },
       },
