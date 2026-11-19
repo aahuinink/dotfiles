@@ -47,6 +47,9 @@ return {
       default_file_explorer = true,
       delete_to_trash = true,
       skip_confirm_for_simple_edits = false,
+      view_options = {
+        show_hidden = true, -- dotfiles visible by default; g. still toggles
+      },
       -- Centered float sized like the Lazy/Mason windows (80% of the editor)
       float = {
         max_width = 0.8,

@@ -21,7 +21,8 @@ map("n",
 
 map("n", "-", "<cmd>Oil --float<CR>", { desc = "Open parent directory in floating Oil" })
 -- Replaces NvChad's <C-n> (NvimTreeToggle); nvim-tree is still on <Leader>e
+-- No dir argument: opens the current buffer's folder (cursor on the file), or :pwd for unnamed buffers
 map("n", "<C-n>", function()
-  require("oil").toggle_float(vim.fn.getcwd())
-end, { desc = "Toggle floating Oil in the working directory" })
+  require("oil").toggle_float()
+end, { desc = "Toggle floating Oil in the current file's folder" })
 map("n", "<Leader>ot", "<cmd>Oil --float --trash /<CR>", { desc = "Open trash in Oil (move files out to restore)" })
